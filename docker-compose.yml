@@ -1,0 +1,44 @@
+
+
+services:
+  # 1. Base de Datos (MongoDB) [cite: 28, 29]
+  mongodb:
+    image: mongo:latest
+    container_name: db_mongo_proyecto
+    restart: always
+    ports:
+      - "${DB_PORT}:27017"
+    volumes:
+      - ./data/db:/data/db
+    networks:
+      - red-proyecto
+
+  # 2. Servidor Backend [cite: 18, 19]
+  backend:
+    build: ./backend
+    container_name: backend_logs
+    restart: always
+    depends_on:
+      - mongodb # Espera a que la DB esté lista
+    environment:
+      - MONGO_URI=mongodb://mongodb:27017/TankDB # "mongodb" es el nombre del servicio
+    ports:
+      - "${BACKEND_PORT}:5000"
+    networks:
+      - red-proyecto
+
+  # 3. Frontend Dashboard [cite: 31, 32]
+  frontend:
+    build: ./frontend
+    container_name: frontend_dashboard
+    restart: always
+    ports:
+      - "${FRONTEND_PORT}:80"
+    environment:
+      - API_URL=http://${SERVER_IP}:${BACKEND_PORT}
+    networks:
+      - red-proyecto
+
+networks:
+  red-proyecto:
+    driver: bridge
