@@ -1,5 +1,5 @@
 
-const URL = `http://server-grupo9-umg.duckdns.org:5000/api/logs`;
+const URL = `http://[2803:d100:f2a0:176e:226:5aff:fe7d:36cb]:5000/api/logs`;
 
 const componentes = ['chassis', 'turret'];
 const acciones = ['FORWARD', 'BACKWARD', 'ROTATE_LEFT', 'ROTATE_RIGHT', 'FIRE'];
