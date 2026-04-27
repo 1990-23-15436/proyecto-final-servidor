@@ -43,4 +43,4 @@ app.get('/api/logs', async (req, res) => {
 });
 
 const PORT = 5000;
-app.listen(PORT, () => console.log(`Backend corriendo en puerto ${PORT}`));
+app.listen(PORT, '::', () => console.log(`Backend corriendo en puerto ${PORT}`));
