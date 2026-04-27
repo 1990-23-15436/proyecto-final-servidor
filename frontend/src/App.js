@@ -5,7 +5,7 @@ function App() {
 
   // Función para obtener datos del Backend
   const fetchLogs = () => {
-    fetch(`http://${process.env.SERVER_IP}:5000/api/logs`) // URL del Backend
+    fetch(`http://${process.env.REACT_APP_API_URL}:5000/api/logs`) // URL del Backend
       .then(response => response.json())
       .then(data => setLogs(data))
       .catch(error => console.error('Error:', error));
