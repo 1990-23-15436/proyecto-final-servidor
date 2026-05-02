@@ -3,7 +3,9 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-app.use(cors());
+app.use(cors({
+  origin: '*'  // Permite cualquier origen
+}));
 app.use(express.json());
 
 // Conexión a MongoDB (usando la variable de entorno de Docker)
