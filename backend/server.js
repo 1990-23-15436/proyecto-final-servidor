@@ -8,7 +8,7 @@ app.use(express.json());
 
 // Conexión a MongoDB (usando la variable de entorno de Docker)
 // Usará la variable MONGO_URI definida en el docker-compose
-const mongoUri = process.env.MONGO_URL;
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/TankDB'; // Fallback para desarrollo local
 
 mongoose.connect(mongoUri)
   .then(() => console.log("✅ Conectado a MongoDB satisfactoriamente"))
