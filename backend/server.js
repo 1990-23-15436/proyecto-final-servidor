@@ -8,7 +8,7 @@ app.use(express.json());
 
 // Conexión a MongoDB (usando la variable de entorno de Docker)
 // Usará la variable MONGO_URI definida en el docker-compose
-const mongoUri = process.env.MONGO_URI;
+const mongoUri = process.env.MONGO_URL;
 
 mongoose.connect(mongoUri)
   .then(() => console.log("✅ Conectado a MongoDB satisfactoriamente"))
