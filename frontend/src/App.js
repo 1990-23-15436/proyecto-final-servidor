@@ -607,7 +607,7 @@ export default function App() {
                     <th>Timestamp</th>
                     <th>Component</th>
                     <th>Action</th>
-                    <th>Value</th>
+                    <th>Tiempo de ejecución</th>
                     <th>Status</th>
                   </tr>
                 </thead>
@@ -636,7 +636,7 @@ export default function App() {
                             <div className="action-tag">{log.action}</div>
                           </td>
                           <td>
-                            <span className="value-cell">{log.value}°</span>
+                            <span className="value-cell">{log.execution_time} ms</span>
                           </td>
                           <td>
                             <span className={`status-badge ${log.status}`}>

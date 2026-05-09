@@ -4,30 +4,28 @@ const cors = require('cors');
 
 const app = express();
 app.use(cors({
-  origin: '*'  // Permite cualquier origen
+  origin: '*'
 }));
 app.use(express.json());
 
-// Conexión a MongoDB (usando la variable de entorno de Docker)
-// Usará la variable MONGO_URI definida en el docker-compose
-const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/TankDB'; // Fallback para desarrollo local
+const mongoUri = process.env.MONGO_URI || 'mongodb://localhost:27017/TankDB';
 
 mongoose.connect(mongoUri)
   .then(() => console.log("✅ Conectado a MongoDB satisfactoriamente"))
   .catch(err => console.error("❌ Error conectando a MongoDB:", err));
 
-// Definición del esquema para los logs del tanque [cite: 22]
 const LogSchema = new mongoose.Schema({
-  timestamp: { type: Date, default: Date.now },
-  component: String, // chassis o turret
-  action: String,    // FORWARD, ROTATE, etc.
-  value: Number,     // grados o velocidad
-  status: String     // success o error
+  timestamp:      { type: Date, default: Date.now },
+  component:      String,  // chassis | turret
+  action:         String,  // FORWARD, BACKWARD, ROTATE_LEFT, ROTATE_RIGHT, FIRE
+  execution_time: Number,  // tiempo de ejecución en milisegundos
+  source_device:  String,  // bluetooth | usb | server
+  status:         String   // success | error
 });
 
 const Log = mongoose.model('Log', LogSchema);
 
-// Endpoint para RECIBIR logs del robot 
+// Recibir logs del robot
 app.post('/api/logs', async (req, res) => {
   try {
     const newLog = new Log(req.body);
@@ -38,7 +36,7 @@ app.post('/api/logs', async (req, res) => {
   }
 });
 
-// Endpoint para que el Dashboard (React) LEA los logs [cite: 34]
+// Leer logs para el Dashboard
 app.get('/api/logs', async (req, res) => {
   const logs = await Log.find().sort({ timestamp: -1 }).limit(50);
   res.json(logs);
